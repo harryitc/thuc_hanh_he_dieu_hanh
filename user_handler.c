@@ -17,17 +17,21 @@ void user_handler(int inputPipe[], int outputPipe[]){
             close(outputPipe[1]);
             exit(1);
         }
+        
+        rc = read(inputPipe[0], &c, 1);
+
+        if(rc <= 0){
+            perror("user handler: read error");
+            close(inputPipe[0]);
+            close(outputPipe[1]);
+            exit(1);
+        }
+        putchar(c);
     }
 
-    rc = read(inputPipe[0], &c, 1);
-
-    if(rc <= 0){
-        perror("user handler: read error");
-        close(inputPipe[0]);
-        close(outputPipe[1]);
-        exit(1);
-    }
-    putchar(c);
+    close(inputPipe[0]);
+    close(outputPipe[1]);
+    exit(0);
 }
 
 void translator(int inputPipe[], int outputPipe[]){
