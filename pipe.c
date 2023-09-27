@@ -18,7 +18,7 @@ void do_child(int dataPipes[]){
 void do_parent(int dataPipes[]){
     int c, rc;
     close(dataPipes[0]);
-    while( c = getchar() > 0){
+    while( (c = getchar()) > 0){
         rc = write(dataPipes[1], &c, 1);
         if(rc == -1){
             perror("Parent: pipe write error");
